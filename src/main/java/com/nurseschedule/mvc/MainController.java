@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
-public class HelloController {
+public class MainController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {	
+	public String printWelcome(ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String userName = authentication.getName();
-		
-		model.addAttribute("message", "Hello " + userName + "!");
-		return "hello";
+
+		if (userName.equals("admin@gmail.com")) {
+			return "admin_panel";
+		} else {
+			return "nurse_panel";
+		}
+
 	}
 }

@@ -7,15 +7,16 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
  
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_NURSE')" />
-		<logout logout-success-url="/" />
+		<form-login	login-page="/login" authentication-failure-url="/login?error=true"/>
+		<logout logout-success-url="/login?logout=true" />
+		<intercept-url pattern="/" access="hasAnyRole('ROLE_ADMIN', 'ROLE_NURSE')" />
 	</http>
  
 	<authentication-manager>
 	  <authentication-provider>
 	    <user-service>
-		<user name="admin" password="admin123" authorities="ROLE_ADMIN" />
-		<user name="nurse" password="nurse123" authorities="ROLE_NURSE" />
+		<user name="admin@gmail.com" password="admin123" authorities="ROLE_ADMIN" />
+		<user name="nurse@gmail.com" password="nurse123" authorities="ROLE_NURSE" />
 	    </user-service>
 	  </authentication-provider>
 	</authentication-manager>

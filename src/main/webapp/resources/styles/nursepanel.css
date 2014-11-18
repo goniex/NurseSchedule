@@ -1,0 +1,29 @@
+header {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+}
+.avatar {
+    width: 300px;
+}
+.main_content {
+    text-align: center;
+    padding-top: 100px;
+    color: rgb(192,57,43);
+}
+
+.navbar-right{
+	margin-right: 50px;
+}
+
+
+textarea {
+    resize: none;
+}
+#generatedSchedule {
+    margin-bottom: 50px;
+}
+
+.send_button{
+	margin-top: 10px;
+}

@@ -1,0 +1,25 @@
+
+main{
+	background-color: rgb(192,57,43);
+	text-align: center;
+}
+
+footer{
+	margin-top: 10px;
+	opacity: 0.7;
+	text-align: center;
+}
+
+#header_up {
+    background-color: black;
+    color: white;
+}
+
+#header_down {
+	text-align: center;
+}
+
+.formField{
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
