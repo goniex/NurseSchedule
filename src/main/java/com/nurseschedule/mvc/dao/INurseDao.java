@@ -24,13 +24,19 @@ public interface INurseDao {
 
     /**
      * Save new or update exist nurse
-     * @param nurseDto
+     * @param nurse
      */
-    void saveOrUpdate(NurseDto nurseDto);
+    Integer save(NurseDto nurse);
+
+    /**
+     * Update nurse
+     * @param nurse
+     */
+    void update(NurseDto nurse);
 
     /**
      * Delete nurse
-     * @param nurseDto
+     * @param id
      */
-    void delete(NurseDto nurseDto);
+    void delete(Integer id);
 }

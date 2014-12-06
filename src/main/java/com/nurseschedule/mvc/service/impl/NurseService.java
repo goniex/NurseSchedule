@@ -6,6 +6,8 @@ import com.nurseschedule.mvc.service.INurseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Tomasz Morek
  */
@@ -20,6 +22,27 @@ public class NurseService implements INurseService {
 
     @Override
     public NurseDto findById(Integer id) {
-        return nurseDao.find(id);
+        return this.nurseDao.find(id);
+    }
+
+    @Override
+    public List<NurseDto> findAll() {
+        return this.nurseDao.findAll();
+    }
+
+    @Override
+    public Integer create(String email, String password, String name, String lastName, Integer workTime, String type) {
+        NurseDto nurse = new NurseDto(email, password, name, lastName, workTime, type);
+        return this.nurseDao.save(nurse);
+    }
+
+    @Override
+    public void update(NurseDto nurse) {
+        this.nurseDao.update(nurse);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        this.nurseDao.delete(id);
     }
 }

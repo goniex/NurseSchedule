@@ -8,20 +8,48 @@ import javax.persistence.*;
 @Entity
 @Table(name = "nurse", schema = "", catalog = "tomek199_nurseschedule")
 public class NurseDto {
-    private int id;
+    private Integer id;
     private String email;
     private String password;
     private String name;
     private String lastName;
     private int workTime;
+    private String type;
+
+    /**
+     * Default constructor
+     */
+    public NurseDto() {}
+
+    /**
+     * Constructor
+     * @param id
+     */
+    public NurseDto(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * Constructor
+     */
+    public NurseDto(String email, String password, String name,
+                    String lastName, Integer workTime, String type) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.workTime = workTime;
+        this.type = type;
+    }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -75,6 +103,16 @@ public class NurseDto {
         this.workTime = workTime;
     }
 
+    @Basic
+    @Column(name = "type")
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,6 +121,7 @@ public class NurseDto {
         NurseDto nurseDto = (NurseDto) o;
 
         if (id != nurseDto.id) return false;
+        if (type != nurseDto.type) return false;
         if (workTime != nurseDto.workTime) return false;
         if (email != null ? !email.equals(nurseDto.email) : nurseDto.email != null) return false;
         if (lastName != null ? !lastName.equals(nurseDto.lastName) : nurseDto.lastName != null)
@@ -102,6 +141,7 @@ public class NurseDto {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + workTime;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
 }
