@@ -2,6 +2,7 @@ package com.nurseschedule.mvc.dao.impl;
 
 import com.nurseschedule.mvc.dao.INurseDao;
 import com.nurseschedule.mvc.dto.NurseDto;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,14 @@ public class NurseDao implements INurseDao {
     }
 
     @Override
+    public NurseDto findByEmail(String email) {
+        String hqlQuery = "From NurseDto Where email = :email";
+        Query query = getSession().createQuery(hqlQuery);
+        query.setParameter("email", email);
+        return (NurseDto) query.uniqueResult();
+    }
+
+    @Override
     public List<NurseDto> findAll() {
         return getSession().createCriteria(NurseDto.class).list();
     }
@@ -50,7 +59,7 @@ public class NurseDao implements INurseDao {
 
     @Override
     public void update(NurseDto nurse) {
-        getSession().saveOrUpdate(nurse);
+        getSession().update(nurse);
     }
 
     @Override

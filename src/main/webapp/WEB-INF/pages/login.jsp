@@ -87,10 +87,10 @@
                         <h3>SIGN IN</h3>
                         <h4>Sign in and test our schedule<br></h4>
                         <form method="post" action="j_spring_security_check">
-							<input name="j_username" type="email" class="form-control formField"
+							<input name="email" type="email" class="form-control formField"
 								id="emailSignIn" placeholder="sample@email.com"> 
 							<input
-								name="j_password" type="password" class="form-control formField"
+								name="password" type="password" class="form-control formField"
 								id="passSignIn" placeholder="Password"> 
 							<input
 								class="btn btn-danger btn-block formField button" name="submit"

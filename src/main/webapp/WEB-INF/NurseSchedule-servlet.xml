@@ -19,4 +19,5 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean id="userContext" class="com.nurseschedule.mvc.service.impl.UserContext"/>
 </beans>

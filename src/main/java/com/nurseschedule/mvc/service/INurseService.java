@@ -17,6 +17,14 @@ public interface INurseService {
     NurseDto findById(Integer id);
 
     /**
+     * Find nurse by email.
+     * Method use to user authentication
+     * @param email
+     * @return
+     */
+    NurseDto findByEmail(String email);
+
+    /**
      * Get all nurses
      * @return List
      */
