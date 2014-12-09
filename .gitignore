@@ -10,3 +10,8 @@ release.properties
 ### IntelliJ IDEA files
 .idea/
 *.iml
+
+### Eclipse
+.classpath
+.project
+.settings/
