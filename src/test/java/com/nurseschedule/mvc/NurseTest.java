@@ -61,4 +61,11 @@ public class NurseTest {
         Assert.assertEquals(newName, nurse.getName());
         this.nurseService.delete(id);
     }
+
+    @Test
+    public void testGetNurseByEmail() throws Exception {
+        final String email = "Zuzanna.Kaczmarek@mail.com";
+        NurseDto nurse = this.nurseService.findByEmail(email);
+        Assert.assertEquals("Zuzanna", nurse.getName());
+    }
 }
