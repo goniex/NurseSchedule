@@ -26,6 +26,11 @@ public class NurseService implements INurseService {
     }
 
     @Override
+    public NurseDto findByEmail(String email) {
+        return nurseDao.findByEmail(email);
+    }
+
+    @Override
     public List<NurseDto> findAll() {
         return this.nurseDao.findAll();
     }

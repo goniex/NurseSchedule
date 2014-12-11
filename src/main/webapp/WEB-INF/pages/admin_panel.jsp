@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-xs-5 col-xs-offset-2 user-data">
                     <h2>Admin</h2>
-                    <h4>nazwa@gmail.com</h4>
+                    <h4>name@gmail.com</h4>
                 </div>
             </div>
             <div class="col-xs-3 col-xs-offset-1">
@@ -27,7 +27,7 @@
                 <thead>
                     <tr>
                         <td>NAME/EMAIL</td>
-                        <td>ETAT</td>
+                        <td>WORK TIME</td>
                         <td>SCHEDULE</td>
                         <td>DELETE</td>
                         <td>EDIT</td>
@@ -36,7 +36,7 @@
                             <td>
                                 <div class="single-user-data">
                                     <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Imie Nazwisko</h4>
+                                    <h4>Name Surname</h4>
                                     <h6>adres@gmail.com</h6>
                                 </div>
                             </td>
@@ -49,7 +49,7 @@
                             <td>
                                 <div class="single-user-data">
                                     <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Imie Nazwisko</h4>
+                                    <h4>Name Surname</h4>
                                     <h6>adres@gmail.com</h6>
                                 </div>
                             </td>
@@ -62,7 +62,7 @@
                             <td>
                                 <div class="single-user-data">
                                     <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Imie Nazwisko</h4>
+                                    <h4>Name Surname</h4>
                                     <h6>adres@gmail.com</h6>
                                 </div>
                             </td>
@@ -75,7 +75,7 @@
                             <td>
                                 <div class="single-user-data">
                                     <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Imie Nazwisko</h4>
+                                    <h4>Name Surname</h4>
                                     <h6>adres@gmail.com</h6>
                                 </div>
                             </td>
@@ -88,7 +88,7 @@
                             <td>
                                 <div class="single-user-data">
                                     <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Imie Nazwisko</h4>
+                                    <h4>Name Surname</h4>
                                     <h6>adres@gmail.com</h6>
                                 </div>
                             </td>
@@ -101,7 +101,7 @@
                             <td>
                                 <div class="single-user-data">
                                     <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Imie Nazwisko</h4>
+                                    <h4>Name Surname</h4>
                                     <h6>adres@gmail.com</h6>
                                 </div>
                             </td>
@@ -122,7 +122,7 @@
                     <input type="text" class="form-control" placeholder="nurse lastname">
                 </div>
                 <div class="col-xs-2">
-                    <input type="email" class="form-control" placeholder="nazwa@gmail.com">
+                    <input type="email" class="form-control" placeholder="name@gmail.com">
                 </div>
                 <div class="col-xs-2">
                     <input type="number" class="form-control" placeholder="job time">

@@ -1,6 +1,7 @@
 package com.nurseschedule.mvc.controller;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,11 +20,10 @@ public class MainController {
             userName = authentication.getName();
         }
 
-        if ( userName.equals("admin@gmail.com") ) {
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("A"))) {
             return "admin_panel";
         } else {
             return "nurse_panel";
         }
-
     }
 }

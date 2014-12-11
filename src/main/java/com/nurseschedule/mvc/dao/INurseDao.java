@@ -12,9 +12,16 @@ public interface INurseDao {
     /**
      * Find nurse by ID
      * @param id
-     * @return NurseDTO
+     * @return NurseDto
      */
     NurseDto find(Integer id);
+
+    /**
+     * Find nurse by email
+     * @param email
+     * @return NurseDto
+     */
+    NurseDto findByEmail(String email);
 
     /**
      * Find all nurses
