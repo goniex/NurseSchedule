@@ -5,7 +5,6 @@ import com.nurseschedule.mvc.object.Nurse;
 import com.nurseschedule.mvc.service.INurseService;
 import com.nurseschedule.mvc.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,10 +31,7 @@ public class NurseController {
      * Get all nurses
      * @return ResponseUtil
      */
-    @RequestMapping(value = "/get",
-                    produces = MediaType.APPLICATION_JSON_VALUE,
-                    consumes = MediaType.APPLICATION_JSON_VALUE,
-                    method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
     public ResponseUtil get() {
         List<NurseDto> nurseDtos = this.nurseService.findAll();
@@ -43,7 +39,7 @@ public class NurseController {
         for (NurseDto nurseDto : nurseDtos) {
             nurses.add(new Nurse(nurseDto));
         }
-        return new ResponseUtil(nurses);
+        return new ResponseUtil((List) nurses);
     }
 
 }

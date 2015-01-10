@@ -5,10 +5,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Panel</title>      
-        <link href="<c:url value="/resources/lib/css/bootstrap.min.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/adminpanel.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/nursepanel.css" />" rel="stylesheet">   
+        <link href="<c:url value="/resources/lib/css/bootstrap.min.css" />" rel="stylesheet"/>
+        <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>
+        <link href="<c:url value="/resources/css/adminpanel.css" />" rel="stylesheet"/>
+        <script src="<c:url value="/resources/lib/js/angular.min.js"/>"></script>
+        <script src="<c:url value="/resources/lib/js/angular-resource.min.js"/>"></script>
+
+        <script src="<c:url value="/resources/lib/ng-app/app.js"/>"></script>
+        <script src="<c:url value="/resources/lib/ng-app/controllers/adminPanelCtrl.js"/>"></script>
+        <script src="<c:url value="/resources/lib/ng-app/services/nurseService.js"/>"></script>
+
     </head>
 	<body>
         <header class="col-xs-12 panel">
@@ -20,4 +26,4 @@
             <p class="navbar-text navbar-right">${principal.username}</p>
         </header>
      
-     <div class="container">
+     <div class="container" ng-app="nurseApp">

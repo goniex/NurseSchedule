@@ -1,6 +1,6 @@
 <%@ include file="header.jsp" %>
 
-        <main class="col-xs-12 admin-panel-main">
+        <main ng-controller="AdminPanelCtrl" class="col-xs-12 admin-panel-main">
         <div class="col-xs-12 user">
             <div class="col-xs-4 col-xs-offset-2">
                 <div class="col-xs-5 admin photo">
@@ -27,88 +27,23 @@
                 <thead>
                     <tr>
                         <td>NAME/EMAIL</td>
-                        <td>WORK TIME</td>
+                        <td>WORK TIME(h)</td>
                         <td>SCHEDULE</td>
                         <td>DELETE</td>
                         <td>EDIT</td>
                     </tr>
-                    <tr>
-                            <td>
-                                <div class="single-user-data">
-                                    <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Name Surname</h4>
-                                    <h6>adres@gmail.com</h6>
-                                </div>
-                            </td>
-                            <td class="small-center">4/4</td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
-                    </tr>
-                    <tr>
-                            <td>
-                                <div class="single-user-data">
-                                    <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Name Surname</h4>
-                                    <h6>adres@gmail.com</h6>
-                                </div>
-                            </td>
-                            <td class="small-center">4/4</td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
-                    </tr>
-                    <tr>
-                            <td>
-                                <div class="single-user-data">
-                                    <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Name Surname</h4>
-                                    <h6>adres@gmail.com</h6>
-                                </div>
-                            </td>
-                            <td class="small-center">4/4</td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
-                    </tr>
-                    <tr>
-                            <td>
-                                <div class="single-user-data">
-                                    <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Name Surname</h4>
-                                    <h6>adres@gmail.com</h6>
-                                </div>
-                            </td>
-                            <td class="small-center">4/4</td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
-                    </tr>
-                    <tr>
-                            <td>
-                                <div class="single-user-data">
-                                    <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Name Surname</h4>
-                                    <h6>adres@gmail.com</h6>
-                                </div>
-                            </td>
-                            <td class="small-center">4/4</td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
-                    </tr>
-                    <tr>
-                            <td>
-                                <div class="single-user-data">
-                                    <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
-                                    <h4>Name Surname</h4>
-                                    <h6>adres@gmail.com</h6>
-                                </div>
-                            </td>
-                            <td class="small-center">4/4</td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
-                            <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
+                    <tr ng-repeat="nurse in nurses">
+                        <td>
+                            <div class="single-user-data">
+                                <img src=<c:url value="/resources/img/ic_person.png"/> class="small-avatar">
+                                <h4>{{nurse.name}} {{nurse.lastName}}</h4>
+                                <h6>{{nurse.email}}</h6>
+                            </div>
+                        </td>
+                        <td class="small-center">{{nurse.workTime}}</td>
+                        <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
+                        <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
+                        <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
                     </tr>
                 </thead>
             </table>
@@ -116,16 +51,16 @@
         <div class="col-xs-12 adding-nurse">
             <div class="centering">
                 <div class="col-xs-3">
-                    <input type="text" class="form-control" placeholder="nurse name">
+                    <input type="text" ng-model="nurse.name" class="form-control" placeholder="nurse name">
                 </div>
                 <div class="col-xs-3">
-                    <input type="text" class="form-control" placeholder="nurse lastname">
+                    <input type="text" ng-model="nurse.lastName" class="form-control" placeholder="nurse lastname">
                 </div>
                 <div class="col-xs-2">
-                    <input type="email" class="form-control" placeholder="name@gmail.com">
+                    <input type="email" ng-model="nurse.email" class="form-control" placeholder="name@gmail.com">
                 </div>
                 <div class="col-xs-2">
-                    <input type="number" class="form-control" placeholder="job time">
+                    <input type="number" ng-model="nurse.time" class="form-control" placeholder="job time">
                 </div>
                 <div class="col-xs-2">
                     <button type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
