@@ -42,7 +42,7 @@
                         </td>
                         <td class="small-center">{{nurse.workTime}}</td>
                         <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                        <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
+                        <td class="small-center"><a ng-click="delete($index)" ng-href="" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
                         <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
                     </tr>
                 </thead>
@@ -60,10 +60,10 @@
                     <input type="email" ng-model="nurse.email" class="form-control" placeholder="name@gmail.com">
                 </div>
                 <div class="col-xs-2">
-                    <input type="number" ng-model="nurse.time" class="form-control" placeholder="job time">
+                    <input type="number" ng-model="nurse.workTime" class="form-control" placeholder="job time">
                 </div>
                 <div class="col-xs-2">
-                    <button type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
+                    <button ng-click="save()" type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
                 </div>
             </div>
         </div>

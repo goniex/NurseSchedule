@@ -53,6 +53,18 @@ public class ResponseUtil implements Serializable {
     public ResponseUtil() { }
 
     /**
+     * Generate response
+     * @param isSuccess
+     */
+    public ResponseUtil(boolean isSuccess) {
+        if (isSuccess) {
+            this.status = STATUS_SUCCESS;
+        } else {
+            this.status = STATUS_ERROR;
+        }
+    }
+
+    /**
      * Constructor
      * Generate success or error message
      * @param message
