@@ -10,6 +10,11 @@ import java.io.Serializable;
 public class Nurse implements Serializable {
 
     /**
+     * ID
+     */
+    private Integer id;
+
+    /**
      * Name
      */
     private String name;
@@ -30,14 +35,28 @@ public class Nurse implements Serializable {
     private int workTime;
 
     /**
+     * Default constructor
+     */
+    public Nurse() { }
+
+    /**
      * Constructor
      * @param nurseDto
      */
     public Nurse(NurseDto nurseDto) {
+        this.id = nurseDto.getId();
         this.name = nurseDto.getName();
         this.lastName = nurseDto.getLastName();
         this.email = nurseDto.getEmail();
         this.workTime = nurseDto.getWorkTime();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

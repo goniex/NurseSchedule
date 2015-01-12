@@ -3,12 +3,10 @@ package com.nurseschedule.mvc.controller;
 import com.nurseschedule.mvc.dto.NurseDto;
 import com.nurseschedule.mvc.object.Nurse;
 import com.nurseschedule.mvc.service.INurseService;
+import com.nurseschedule.mvc.utils.RequestUtil;
 import com.nurseschedule.mvc.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,4 +40,29 @@ public class NurseController {
         return new ResponseUtil((List) nurses);
     }
 
+    /**
+     * Save new nurse
+     * @return ResponseUtil
+     */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseUtil save(@RequestBody Object requestObject) {
+        Nurse nurse = (Nurse) RequestUtil.convert(requestObject, Nurse.class);
+        System.out.println(requestObject.toString());
+        Integer id = this.nurseService.create(nurse.getEmail(), "haslo123", nurse.getName(),
+                nurse.getLastName(), nurse.getWorkTime(), "N");
+        nurse.setId(id);
+        return new ResponseUtil(nurse, "Save correct");
+    }
+
+    /**
+     * Delete nurse
+     * @return ResponseUtil
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseUtil delete(@PathVariable Integer id) {
+        this.nurseService.delete(id);
+        return new ResponseUtil(true);
+    }
 }
