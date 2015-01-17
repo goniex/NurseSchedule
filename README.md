@@ -6,7 +6,7 @@ More information is available on the [wiki](https://github.com/goniex/NurseSched
 
 ##Environments
 ###Remote
-Worked application instance is deployed on **heroku.com** at [fierce-eyrie-7800.herokuapp.com](https://fierce-eyrie-7800.herokuapp.com)
+Worked application instance is deployed on **heroku.com** at [nurse-schedule.herokuapp.com](https://nurse-schedule.herokuapp.com)
 
 ###Local
 How to deploy the application on local machine.
@@ -18,7 +18,6 @@ How to deploy the application on local machine.
 ####Run steps
 - clone repository
 - go to project directory using the terminal
-- switch branch to *develop* <code> git checkout develop </code>
 - build the application <code>mvn clean install</code>, application will be built on *target* folder
 - copy application *NurseSchedule.war* to *TOMCAT_HOME/webapps* directory
 - go to *TOMCAT_HOME/bin* directory using the terminal
