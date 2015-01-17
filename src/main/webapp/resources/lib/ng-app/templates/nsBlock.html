@@ -1,1 +1,25 @@
 <!-- todo: write template for blockUI -->
+<style>
+    #blockLayer {
+        left: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    #blockLayer h1 {
+        top: 45%;
+        left: 40%;
+        width: 20%;
+        height: auto;
+        position: relative;
+        text-align: center;
+    }
+</style>
+<div id="blockLayer">
+    <h1>
+        <span class="label label-default">Loading...</span>
+    </h1>
+</div>

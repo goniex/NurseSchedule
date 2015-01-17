@@ -28,4 +28,4 @@
         </header>
      
      <div class="container" ng-app="nurseApp">
-         <ns-block ng-show="isPending">loading...</ns-block>
+         <ns-block ng-show="isPending"></ns-block>

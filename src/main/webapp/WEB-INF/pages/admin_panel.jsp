@@ -42,7 +42,7 @@
                         </td>
                         <td class="small-center">{{nurse.workTime}}</td>
                         <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
-                        <td class="small-center"><a ng-click="delete($index)" ng-href="" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
+                        <td class="small-center"><a ng-click="delete($index)" ng-href="javascript:void(0);" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
                         <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
                     </tr>
                 </thead>
