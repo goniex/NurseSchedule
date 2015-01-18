@@ -15,3 +15,9 @@ release.properties
 .classpath
 .project
 .settings/
+
+### OSX template
+.DS_Store
+.AppleDouble
+.LSOverride
+
