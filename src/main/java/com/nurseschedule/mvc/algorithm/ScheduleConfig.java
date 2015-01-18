@@ -25,6 +25,6 @@ public class ScheduleConfig {
     public static final int WEEKEND_DAY_SHIFT_NURSES_NUMBER = 6;
 
     public static final int NIGHT_SHIFT_NURSES_NUMBER = 1;
-
-    public static final int PATTERN_LENGTH = 7;
+    
+    public static final int ALL_SCHEDULE_WEEK_NUMBER = 5;
 }

@@ -3,6 +3,7 @@ package pl.nurseschedule.mvc.sto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nurseschedule.mvc.algorithm.ScheduleConfig;
 import com.nurseschedule.mvc.dto.NurseDto;
 
 /**
@@ -19,7 +20,9 @@ public class NurseSto extends NurseDto {
 
     private boolean weekAvailability;
 
-    private boolean nightAvailability;
+    private boolean generalNightAvailability;
+    
+    private ArrayList<Boolean> nightAvailabilityInWeeks;
 
     public void setWeekPattern(String pattern, int weekIndex) {
         weekPatterns.add(weekIndex, pattern);
@@ -41,16 +44,31 @@ public class NurseSto extends NurseDto {
         this.weekAvailability = weekAvailability;
     }
 
-    public boolean isNightAvailability() {
-        return nightAvailability;
+    public boolean isGeneralNightAvailability() {
+        return generalNightAvailability;
     }
 
-    public void setNightAvailability(boolean nightAvailability) {
-        this.nightAvailability = nightAvailability;
+    public void setGeneralNightAvailability(boolean generalNightAvailability) {
+        this.generalNightAvailability = generalNightAvailability;
+    }
+    
+    public void setNightAvailablityForBegin() {
+        nightAvailabilityInWeeks = new ArrayList<Boolean>();
+        for(int i=0; i<ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER; ++i) {
+            nightAvailabilityInWeeks.add(true);
+        }
+    }
+    
+    public void setNightAvailabilityInWeeks(int week, boolean value) {
+        nightAvailabilityInWeeks.set(week, value);
+    }
+    
+    public boolean isNightAvailabilityInWeek(int week) {
+        return nightAvailabilityInWeeks.get(week);
     }
 
     public void printWeekPattern(int weekIndex) {
         System.out.println(weekPatterns.get(weekIndex));
     }
-
+    
 }
