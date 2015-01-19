@@ -10,6 +10,7 @@
         <link href="<c:url value="/resources/css/adminpanel.css" />" rel="stylesheet"/>
         <script src="<c:url value="/resources/lib/js/angular.min.js"/>"></script>
         <script src="<c:url value="/resources/lib/js/angular-resource.min.js"/>"></script>
+        <script src="<c:url value="/resources/lib/js/ui-bootstrap-tpls-0.12.0.min.js"/>"></script>
 
         <script src="<c:url value="/resources/lib/ng-app/app.js"/>"></script>
         <script src="<c:url value="/resources/lib/ng-app/controllers/adminPanelCtrl.js"/>"></script>

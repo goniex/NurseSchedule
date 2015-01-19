@@ -1,4 +1,4 @@
-nurseApp.controller("AdminPanelCtrl", function($scope, NurseService) {
+nurseApp.controller("AdminPanelCtrl", function($scope, $modal, NurseService) {
     $scope.nurse = {};
 
     NurseService.get({}, function(result) {
@@ -8,7 +8,6 @@ nurseApp.controller("AdminPanelCtrl", function($scope, NurseService) {
             alert(result.message);
         }
     });
-
     $scope.save = function() {
         NurseService.save($scope.nurse, function(result) {
             if (result.status == 'SUCCESS') {
@@ -25,5 +24,23 @@ nurseApp.controller("AdminPanelCtrl", function($scope, NurseService) {
                 $scope.nurses.splice(index, 1);
             }
         });
-    }
+    };
+
+    $scope.show = function() {
+        var scheduleModal = $modal.open({
+            templateUrl: 'resources/lib/ng-app/templates/scheduleModal.html',
+            resolve: {
+                items: function() {
+                    return ["one", "two", "three"];
+                }
+            },
+            controller: function($scope, $modalInstance, items) {
+                $scope.items = items;
+                $scope.closeModal = function() {
+                    $modalInstance.dismiss('cancel');
+                }
+            },
+            size: 'lg'
+        });
+    };
 });

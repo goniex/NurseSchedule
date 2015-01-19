@@ -1,4 +1,4 @@
-var nurseApp = angular.module("nurseApp", ['ngResource']);
+var nurseApp = angular.module("nurseApp", ['ngResource', 'ui.bootstrap']);
 
 nurseApp.config(function($httpProvider) {
    $httpProvider.interceptors.push('blockInterceptor');
