@@ -8,9 +8,13 @@
         <link href="<c:url value="/resources/lib/css/bootstrap.min.css" />" rel="stylesheet"/>
         <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>
         <link href="<c:url value="/resources/css/adminpanel.css" />" rel="stylesheet"/>
+        <link href="<c:url value="/resources/lib/css/angular-bootstrap-calendar.min.css"/>" rel="stylesheet"/>
+
         <script src="<c:url value="/resources/lib/js/angular.min.js"/>"></script>
         <script src="<c:url value="/resources/lib/js/angular-resource.min.js"/>"></script>
         <script src="<c:url value="/resources/lib/js/ui-bootstrap-tpls-0.12.0.min.js"/>"></script>
+        <script src="<c:url value="/resources/lib/js/moment-with-locales.min.js"/>"></script>
+        <script src="<c:url value="/resources/lib/js/angular-bootstrap-calendar-tpls.min.js"/>"></script>
 
         <script src="<c:url value="/resources/lib/ng-app/app.js"/>"></script>
         <script src="<c:url value="/resources/lib/ng-app/controllers/adminPanelCtrl.js"/>"></script>
