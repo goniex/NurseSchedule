@@ -31,8 +31,8 @@ public class ScheduleUtil {
         }
     }
 
-    protected static void createWeekSchedule(List<NursePattern> feasiblePatternsWithNight, List<NursePattern> feasiblePatternsWithoutNight,
-            List<NurseSto> nurses, int weekIndex, List<ShiftCounter> dayShiftCounters, List<ShiftCounter> nightShiftCounters) {
+    protected static void createWeekScheduleNights(List<NursePattern> feasiblePatternsWithNight, List<NurseSto> nurses, int weekIndex,
+            List<ShiftCounter> dayShiftCounters, List<ShiftCounter> nightShiftCounters) {
         boolean successNights = false;
         while ( !successNights) {
             setCountersToZero(nightShiftCounters);
@@ -46,7 +46,10 @@ public class ScheduleUtil {
             }
             successNights = checkNightCounters(nightShiftCounters);
         }
+    }
 
+    protected static void createWeekScheduleDays(List<NursePattern> feasiblePatternsWithoutNight, List<NurseSto> nurses, int weekIndex,
+            List<ShiftCounter> dayShiftCounters, List<ShiftCounter> nightShiftCounters) {
         List<Integer> daysCounterValuesList = createDaysCounterValuesList(dayShiftCounters);
         while (checkNursesAvailability(nurses)) {
             setDaysCounterToPreviousValues(dayShiftCounters, daysCounterValuesList);
@@ -56,6 +59,9 @@ public class ScheduleUtil {
                     List<NursePattern> feasiblePatternsWithoutNightCopy = new ArrayList<NursePattern>(feasiblePatternsWithoutNight);
                     createWeekScheduleDaysPart(feasiblePatternsWithoutNightCopy, nurse, weekIndex, dayShiftCounters, nightShiftCounters);
                 }
+            }
+            if ( weekIndex == 4 ) {
+                break;
             }
         }
     }
@@ -87,12 +93,25 @@ public class ScheduleUtil {
             String pattern = feasiblePatterns.get(randomIndex).getPattern();
             feasiblePatterns.remove(randomIndex);
             if ( checkPatterMatching(pattern, dayShiftCounters, nightShiftCounters) ) {
+                if ( weekIndex > 0 && nurse.getWeekPattern(weekIndex - 1).charAt(6) == 'N' ) {
+                    if ( isPatternCollideWithPreviousWeekendEnd(pattern) ) {
+                        break;
+                    }
+                }
                 nurse.setWeekAvailability(false);
                 nurse.setWeekPattern(pattern, weekIndex);
                 break;
             } else {
                 continue;
             }
+        }
+    }
+
+    private static boolean isPatternCollideWithPreviousWeekendEnd(String pattern) {
+        if ( pattern.charAt(0) == 'R' && pattern.charAt(1) == 'R' ) {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -117,11 +136,9 @@ public class ScheduleUtil {
     // fill wrong patterns to fill schedule
     protected static void fillWeekScheduleUsingWrongPatterns(List<NurseSto> hours32Nurses, List<NurseSto> hours20Nurses, int weekIndex,
             List<ShiftCounter> dayShiftCounters, List<ShiftCounter> nightShiftCounters) {
-
         if ( finalCheckCountersPropriety(dayShiftCounters, nightShiftCounters) ) {
             return;
         } else {
-            // set wrong patterns from all patterns to fill week schedule and increment number of wrong patterns until schedule will not be filled properly
             for (NurseSto nurse : hours32Nurses) {
                 if ( nurse.isWeekAvailability() ) {
                     nurse.setWeekPattern(createWrongPatternToFillSchedule(dayShiftCounters, nightShiftCounters), weekIndex);

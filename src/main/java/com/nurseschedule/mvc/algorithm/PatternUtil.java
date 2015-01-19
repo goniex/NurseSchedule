@@ -18,7 +18,6 @@ public class PatternUtil {
 
     private static final int DAY_HOURS = 8;
 
-    // wszystkie mozliwe permutacje patternow (w oparciu o enum Shift)
     public static void getPermutations(List<String> patterns, List<Shift> list, int depth, String val) {
         if ( depth <= 0 ) {
             return;
@@ -34,6 +33,52 @@ public class PatternUtil {
         }
     }
 
+    public static List<NursePattern> filtrationBasedOnConditions(List<String> patterns) {
+        String[] conditions = new String[] {
+
+        "^(.)*(N{2,3}RR)?(.)*$",
+
+        /*"^(.)*(NN(RR)*)?(.)*$",
+
+        "^(.)*[^R]?R{2,7}[^R]?(.)*$",
+
+        "^(.)*(NN|RR|dd){2}$" */};
+
+        List<NursePattern> nursePatterns = new ArrayList<NursePattern>();
+        for (String pattern : patterns) {
+            boolean patternMatches = true;
+            for (String condition : conditions) {
+                patternMatches &= pattern.matches(condition);
+            }
+            if ( patternMatches ) {
+                NursePattern nursePattern = new NursePattern(pattern);
+                nursePatterns.add(nursePattern);
+            }
+        }
+        return nursePatterns;
+    }
+
+    public static List<NursePattern> getPatternBasedOnHours(List<NursePattern> patterns, int hours, boolean isNight) {
+        List<NursePattern> feasiblePatterns = new ArrayList<NursePattern>();
+        int workDays = hours / DAY_HOURS;
+        int restDays = WEEK_LENGTH - workDays;
+        for (NursePattern pattern : patterns) {
+            String stringPattern = pattern.getPattern();
+            if ( isNight ) {
+                if ( countLetterOccurrencesInString(stringPattern, 'N') > 0
+                        && countLetterOccurrencesInString(stringPattern, 'N') + countLetterOccurrencesInString(stringPattern, 'd') == workDays
+                        && countLetterOccurrencesInString(stringPattern, 'R') == restDays ) {
+                    feasiblePatterns.add(pattern);
+                }
+            } else {
+                if ( countLetterOccurrencesInString(stringPattern, 'd') == workDays && countLetterOccurrencesInString(stringPattern, 'R') == restDays ) {
+                    feasiblePatterns.add(pattern);
+                }
+            }
+        }
+        return feasiblePatterns;
+    }
+
     public static void savePatternsToFile(List<NursePattern> patterns, String fileString) throws FileNotFoundException {
         File file = new File(fileString);
         PrintWriter writer = new PrintWriter(file);
@@ -45,6 +90,7 @@ public class PatternUtil {
         writer.close();
     }
 
+    // METODY POD SPODEM SA DO USUNIECIA
     public static List<NursePattern> findAllPatternsWithNight(List<String> patterns, int hours) {
         List<String> feasiblePatternsFirst = firstFiltrationStep(patterns, hours);
         List<String> feasiblePatternsSecond = secondStepWithNight(feasiblePatternsFirst);
@@ -66,21 +112,6 @@ public class PatternUtil {
             patternList.add(pattern);
         }
         return patternList;
-    }
-
-    // pierwsza filtracja, wyciagniecie wszystkich patternow zgadzajacych sie z przekazanymi godzinami
-    private static List<String> firstFiltrationStep(List<String> patterns, int hours) {
-        List<String> feasiblePatterns = new ArrayList<String>();
-        int workDays = hours / DAY_HOURS;
-        int restDays = WEEK_LENGTH - workDays;
-        for (String pattern : patterns) {
-            String stringPattern = pattern.toString();
-            if ( countLetterOccurrencesInString(stringPattern, 'd') + countLetterOccurrencesInString(stringPattern, 'N') == workDays
-                    && countLetterOccurrencesInString(stringPattern, 'R') == restDays ) {
-                feasiblePatterns.add(pattern);
-            }
-        }
-        return feasiblePatterns;
     }
 
     // druga filtracja: same bez nocek
@@ -127,13 +158,28 @@ public class PatternUtil {
         List<String> feasiblePatterns = firstFiltrationStep(patterns, hours);
         List<String> feasiblePatternsSecondStep = partTimeWorkFiltrationSecondStep(feasiblePatterns);
         List<NursePattern> nursePatterns = new ArrayList<NursePattern>();
-        for(String stringPattern: feasiblePatternsSecondStep) {
+        for (String stringPattern : feasiblePatternsSecondStep) {
             NursePattern pattern = new NursePattern(stringPattern);
             nursePatterns.add(pattern);
         }
         return nursePatterns;
     }
-    
+
+    // pierwsza filtracja, wyciagniecie wszystkich patternow zgadzajacych sie z przekazanymi godzinami
+    private static List<String> firstFiltrationStep(List<String> patterns, int hours) {
+        List<String> feasiblePatterns = new ArrayList<String>();
+        int workDays = hours / DAY_HOURS;
+        int restDays = WEEK_LENGTH - workDays;
+        for (String pattern : patterns) {
+            String stringPattern = pattern.toString();
+            if ( countLetterOccurrencesInString(stringPattern, 'd') + countLetterOccurrencesInString(stringPattern, 'N') == workDays
+                    && countLetterOccurrencesInString(stringPattern, 'R') == restDays ) {
+                feasiblePatterns.add(pattern);
+            }
+        }
+        return feasiblePatterns;
+    }
+
     private static List<String> partTimeWorkFiltrationSecondStep(List<String> patterns) {
         List<String> feasiblePatterns = new ArrayList<String>();
         Matcher matchers[] = new Matcher[ScheduleConfig.halfTimeSeries.length];
@@ -156,21 +202,21 @@ public class PatternUtil {
         }
         return feasiblePatternsFinal;
     }
-    
+
     protected static List<NursePattern> getPartTimeWorkerDayPattern(List<NursePattern> patterns) {
         List<NursePattern> dayPatterns = new ArrayList<NursePattern>();
-        for(NursePattern pattern: patterns) {
-            if(PatternUtil.countLetterOccurrencesInString(pattern.getPattern(), 'd') == 3) {
+        for (NursePattern pattern : patterns) {
+            if ( PatternUtil.countLetterOccurrencesInString(pattern.getPattern(), 'd') == 3 ) {
                 dayPatterns.add(pattern);
             }
         }
         return dayPatterns;
     }
-    
+
     protected static List<NursePattern> getPartTimeWorkerNightPattern(List<NursePattern> patterns) {
         List<NursePattern> nightPatterns = new ArrayList<NursePattern>();
-        for(NursePattern pattern: patterns) {
-            if(PatternUtil.countLetterOccurrencesInString(pattern.getPattern(), 'd') != 3) {
+        for (NursePattern pattern : patterns) {
+            if ( PatternUtil.countLetterOccurrencesInString(pattern.getPattern(), 'd') != 3 ) {
                 nightPatterns.add(pattern);
             }
         }

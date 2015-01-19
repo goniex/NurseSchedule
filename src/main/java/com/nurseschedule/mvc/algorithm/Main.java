@@ -1,6 +1,5 @@
 package com.nurseschedule.mvc.algorithm;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +19,28 @@ public class Main {
     public static void main(String[] args) {
         PatternUtil.getPermutations(patterns, shifts, ScheduleConfig.WORKWEEK_LENGTH + ScheduleConfig.WEEKEND_LEGTH, "");
 
+        List<NursePattern> consistentPatterns = PatternUtil.filtrationBasedOnConditions(patterns);
+        for (NursePattern pattern : consistentPatterns) {
+            System.out.println(pattern.getPattern());
+        }
+        System.out.println(consistentPatterns.size());
+
         // for all time workers: 40h + 32h patterns
+        /*List<NursePattern> feasiblePatternsWithNight40Hours = PatternUtil.getPatternBasedOnHours(consistentPatterns, 40, true);
+        List<NursePattern> feasiblePatternsWithoutNight40Hours = PatternUtil.getPatternBasedOnHours(consistentPatterns, 40, false);
+        List<NursePattern> feasiblePatternsWithNight32Hours = PatternUtil.getPatternBasedOnHours(consistentPatterns, 32, true);
+        List<NursePattern> feasiblePatternsWithoutNight32Hours = PatternUtil.getPatternBasedOnHours(consistentPatterns, 32, false);*/
+
+        // for 32h workers (all + this)
+        /*List<NursePattern> feasiblePatterns32Hours = new ArrayList<NursePattern>(feasiblePatternsWithNight32Hours);
+        feasiblePatterns32Hours.addAll(feasiblePatternsWithoutNight32Hours);*/
+
+        // for 20h workers: 16h + 24h patterns
+        /*List<NursePattern> feasiblePatterns16Hours = PatternUtil.getPatternBasedOnHours(consistentPatterns, 16, true);
+        feasiblePatterns16Hours.addAll(PatternUtil.getPatternBasedOnHours(consistentPatterns, 16, false));
+        List<NursePattern> feasiblePatterns24Hours = PatternUtil.getPatternBasedOnHours(consistentPatterns, 24, true);
+        feasiblePatterns24Hours.addAll(PatternUtil.getPatternBasedOnHours(consistentPatterns, 24, false));*/
+
         List<NursePattern> feasiblePatternsWithNight40Hours = PatternUtil.findAllPatternsWithNight(patterns, 40);
         List<NursePattern> feasiblePatternsWithoutNight40Hours = PatternUtil.findAllPatternsWithoutNight(patterns, 40);
         List<NursePattern> feasiblePatternsWithNight32Hours = PatternUtil.findAllPatternsWithNight(patterns, 32);
@@ -40,8 +60,6 @@ public class Main {
         ScheduleUtil.createWorkWeekCounters(dayShiftCounters, nightShiftCounters);
         ScheduleUtil.createWeekendCounters(dayShiftCounters, nightShiftCounters);
 
-        // tworzymy pielegniarki na caly etat i przydzielamy im patterny, zaczynajac od nocek, nastepnie poprzez dni, az nie przydzielimy dla wszystkich 12
-        // pielegniarek. Zwiekszamy tez liczniki
         List<NurseSto> nursesForFullJob = createNursesToTest(ScheduleConfig.FULL_TIME_NURSES_NUMBER, 0);
         List<NurseSto> nursesFor20Hours = createNursesToTest(ScheduleConfig.HOURS_20_NURSES_NUMBER + ScheduleConfig.FULL_TIME_NURSES_NUMBER
                 + ScheduleConfig.HOURS_32_NURSES_NUMBER, ScheduleConfig.FULL_TIME_NURSES_NUMBER + ScheduleConfig.HOURS_32_NURSES_NUMBER);
@@ -52,32 +70,39 @@ public class Main {
         allNurses.addAll(nursesFor32Hours);
         allNurses.addAll(nursesFor20Hours);
 
+        // po rozbiciu i losowaniu na zmiane 32/40h dla pielegniarek na caly etat i 16/24h dla pielegniarek na 20h czasami liczniki sa niedorobione
+        // tutaj mogloby zamiast takiego rozbijania pomoc liczenie godzin i zastosowanie tez patternow z 6 zmianami (na razie sa tylko 4 i 5)
         for (int i = 0; i < ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER; ++i) {
             ScheduleUtil.setWeekAvailabilityForAllNurses(allNurses);
             if ( i < ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER - 1 ) {
-                ScheduleUtil.createWeekSchedule(feasiblePatternsWithNight40Hours, feasiblePatternsWithoutNight40Hours, nursesForFullJob, i, dayShiftCounters,
-                        nightShiftCounters);
-                ScheduleUtil.setProperPatternsForPartTimeWorker(feasiblePatterns32Hours, feasiblePatterns24Hours, nursesFor32Hours, nursesFor20Hours, i,
-                        dayShiftCounters, nightShiftCounters);
+                if ( i % 2 == 0 ) {
+                    ScheduleUtil.createWeekScheduleNights(feasiblePatternsWithNight40Hours, nursesForFullJob, i, dayShiftCounters, nightShiftCounters);
+                    ScheduleUtil.createWeekScheduleDays(feasiblePatternsWithoutNight40Hours, nursesForFullJob, i, dayShiftCounters, nightShiftCounters);
+                    ScheduleUtil.setProperPatternsForPartTimeWorker(feasiblePatterns32Hours, feasiblePatterns16Hours, nursesFor32Hours, nursesFor20Hours, i,
+                            dayShiftCounters, nightShiftCounters);
+                } else {
+                    ScheduleUtil.createWeekScheduleNights(feasiblePatternsWithNight32Hours, nursesForFullJob, i, dayShiftCounters, nightShiftCounters);
+                    ScheduleUtil.createWeekScheduleDays(feasiblePatternsWithoutNight32Hours, nursesForFullJob, i, dayShiftCounters, nightShiftCounters);
+                    ScheduleUtil.setProperPatternsForPartTimeWorker(feasiblePatterns32Hours, feasiblePatterns24Hours, nursesFor32Hours, nursesFor20Hours, i,
+                            dayShiftCounters, nightShiftCounters);
+                }
                 ScheduleUtil.fillWeekScheduleUsingWrongPatterns(nursesFor32Hours, nursesFor20Hours, i, dayShiftCounters, nightShiftCounters);
                 ScheduleUtil.setEmptyPatternForNotNecessaryWorkers(allNurses, i);
-
-                System.out.println("********************************* WEEK " + (i + 1) + " ************************************");
-                printNursesDetails(nursesForFullJob, i);
-                printNursesDetails(nursesFor32Hours, i);
-                printNursesDetails(nursesFor20Hours, i);
-                ScheduleUtil.printCounters(dayShiftCounters, nightShiftCounters);
-                System.out.println("Wrong patterns all number: " + ScheduleUtil.wrongPatterns);
             } else {
-                //POPRACOWAC NAD TYM, NIE DZIALA BO NIE MA ODPOWIEDNICH PATTERNOW, KTORE MOGLYBY ZAPELNIC LICZNIKI NOCEK 
-                //(MOZE ROZWIAZANIEM BEDZIE W TEJ SYTUACJI DOROBIENIE W METODZIE CREATEWEEKSCHEDULE JAKIEOS BOOLA, KTORY ROZROZNI
-                //CZY AKTUALNIE ZACZYNAMY OD NORMALNYCH PIELEGNIAREK CZY TYCH NA CZESC ETATU I W TAKIEJ SYTUACJI BEDZIEMY 
-                //PRZYDZIELAC FEJKOWE PATTERNY NA NOCKI I ZWIEKSZAC ZNANY JUZ LICZNIK,
                 List<NursePattern> partTimeNightPatterns = PatternUtil.getPartTimeWorkerNightPattern(feasiblePatterns24Hours);
-                List<NursePattern> partTimeDayPatterns = PatternUtil.getPartTimeWorkerDayPattern(feasiblePatterns24Hours);
-                ScheduleUtil.createWeekSchedule(partTimeNightPatterns, partTimeDayPatterns, nursesFor20Hours, i, dayShiftCounters, nightShiftCounters);
-                ScheduleUtil.printCounters(dayShiftCounters, nightShiftCounters);
+                partTimeNightPatterns.addAll(feasiblePatterns16Hours);
+                ScheduleUtil.createWeekScheduleNights(partTimeNightPatterns, nursesFor20Hours, i, dayShiftCounters, nightShiftCounters);
+                ScheduleUtil.createWeekScheduleDays(feasiblePatternsWithoutNight40Hours, nursesForFullJob, i, dayShiftCounters, nightShiftCounters);
+                ScheduleUtil.fillWeekScheduleUsingWrongPatterns(nursesForFullJob, nursesFor32Hours, i, dayShiftCounters, nightShiftCounters);
+                ScheduleUtil.setEmptyPatternForNotNecessaryWorkers(allNurses, i);
             }
+
+            System.out.println("********************************* WEEK " + (i + 1) + " ************************************");
+            printNursesDetails(nursesForFullJob, i);
+            printNursesDetails(nursesFor32Hours, i);
+            printNursesDetails(nursesFor20Hours, i);
+            ScheduleUtil.printCounters(dayShiftCounters, nightShiftCounters);
+            System.out.println("Wrong patterns all number: " + ScheduleUtil.wrongPatterns);
 
         }
 
