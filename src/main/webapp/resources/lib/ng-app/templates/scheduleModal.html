@@ -2,7 +2,19 @@
     <h3 class="modal-title">Schedule</h3>
 </div>
 <div class="modal-body">
-    <pre>{{items | json}}</pre>
+    <pre>{{events | json}}</pre>
+    <mwl-calendar
+            calendar-events="events"
+            calendar-view="calendarView"
+            calendar-current-day="calendarDay"
+            calendar-control="calendarControl"
+            calendar-event-click="eventClicked($event)"
+            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+            calendar-edit-event-click="eventEdited($event)"
+            calendar-delete-event-click="eventDeleted($event)"
+            calendar-auto-open="true">
+    </mwl-calendar>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="closeModal()">Cancel</button>

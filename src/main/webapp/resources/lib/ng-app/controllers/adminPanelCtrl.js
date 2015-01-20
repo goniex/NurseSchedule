@@ -30,12 +30,24 @@ nurseApp.controller("AdminPanelCtrl", function($scope, $modal, NurseService) {
         var scheduleModal = $modal.open({
             templateUrl: 'resources/lib/ng-app/templates/scheduleModal.html',
             resolve: {
-                items: function() {
-                    return ["one", "two", "three"];
+                events: function() {
+                    return [
+                        {
+                            title: 'Event 1',
+                            type: 'warning',
+                            starts_at: new Date(2015, 0, 1),
+                            ends_at: new Date(2015, 0, 1, 12),
+                            editable: false,
+                            deletable: false
+                        }
+                    ];
                 }
             },
-            controller: function($scope, $modalInstance, items) {
-                $scope.items = items;
+            controller: function($scope, $modalInstance, events) {
+                $scope.calendarView = 'month';
+                $scope.calendarDay = new Date();
+                $scope.events = events;
+
                 $scope.closeModal = function() {
                     $modalInstance.dismiss('cancel');
                 }
