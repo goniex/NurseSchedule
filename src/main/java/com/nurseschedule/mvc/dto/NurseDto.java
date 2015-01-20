@@ -15,6 +15,7 @@ public class NurseDto {
     private String lastName;
     private int workTime;
     private String type;
+    private String schedule;
 
     /**
      * Default constructor
@@ -113,6 +114,16 @@ public class NurseDto {
         this.type = type;
     }
 
+    @Basic
+    @Column(name = "schedule")
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,6 +134,7 @@ public class NurseDto {
         if (id != nurseDto.id) return false;
         if (type != nurseDto.type) return false;
         if (workTime != nurseDto.workTime) return false;
+        if (schedule != nurseDto.schedule) return false;
         if (email != null ? !email.equals(nurseDto.email) : nurseDto.email != null) return false;
         if (lastName != null ? !lastName.equals(nurseDto.lastName) : nurseDto.lastName != null)
             return false;
@@ -142,6 +154,7 @@ public class NurseDto {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + workTime;
         result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (schedule != null ? schedule.hashCode() : 0);
         return result;
     }
 }

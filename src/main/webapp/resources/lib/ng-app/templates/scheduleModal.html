@@ -8,9 +8,9 @@
         </div>
         <div class="col-md-6">
             <div class="btn-group pull-right">
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Month</label>
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Week</label>
-                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">Day</label>
+                <label class="btn btn-danger" ng-model="calendarView" btn-radio="'month'">Month</label>
+                <label class="btn btn-danger" ng-model="calendarView" btn-radio="'week'">Week</label>
+                <label class="btn btn-danger" ng-model="calendarView" btn-radio="'day'">Day</label>
             </div>
         </div>
     </div>
@@ -28,6 +28,13 @@
                 calendar-delete-event-click="eventDeleted($event)"
                 calendar-auto-open="true">
             </mwl-calendar>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="event event-warning"></div>Day shift<br/>
+            <div class="event event-info"></div>Night shift<br/>
+            <div class="event event-inverse"></div>Rest<br/>
         </div>
     </div>
 </div>
