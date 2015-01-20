@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 class="modal-title">Schedule</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center">{{calendarDay | date}}</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group pull-right">
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Month</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Week</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">Day</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <mwl-calendar
+                calendar-events="events"
+                calendar-view="calendarView"
+                calendar-current-day="calendarDay"
+                calendar-control="calendarControl"
+                calendar-event-click="eventClicked($event)"
+                calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                calendar-edit-event-click="eventEdited($event)"
+                calendar-delete-event-click="eventDeleted($event)"
+                calendar-auto-open="true">
+            </mwl-calendar>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="closeModal()">Cancel</button>
+</div>
