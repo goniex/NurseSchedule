@@ -2,12 +2,6 @@ package com.nurseschedule.mvc.algorithm;
 
 public class ScheduleConfig {
 
-    public static final String[] fullJobNightRegex = { "^[^N]{5}[N]{2}$", "^[^N]{4}[N]{3}$", "^[N]{2,3}[R]{2}[^N]*$", "^[^N]*[N]{3}[R]{2}$[^N]*" };
-
-    public static final String[] nightSeries = { "^[^N]*[N]{2,3}[R]{2,3}[^N]*$", "^[^N]*[N]{2,3}$" };
-
-    public static final String[] halfTimeSeries = { "^[R]*[N]{2,3}[R]{2,3}[R]*$", "^[R]*[N]{2,3}$", "^[R]*[d]{2,3}[R]*$", "^[R]*[d]{1}[N]{2}[R]{2,3}$" };
-
     public static final int WORKWEEK_LENGTH = 5;
 
     public static final int WEEKEND_LEGTH = 2;
@@ -25,6 +19,6 @@ public class ScheduleConfig {
     public static final int WEEKEND_DAY_SHIFT_NURSES_NUMBER = 6;
 
     public static final int NIGHT_SHIFT_NURSES_NUMBER = 1;
-    
+
     public static final int ALL_SCHEDULE_WEEK_NUMBER = 5;
 }

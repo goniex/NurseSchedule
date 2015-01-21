@@ -177,6 +177,13 @@ public class ScheduleUtil {
         }
     }
 
+    protected static void setNightAvailabilityForAllNurses(List<NurseSto> allNurses) {
+        for (NurseSto nurse : allNurses) {
+            nurse.setNightAvailablityForBegin();
+            nurse.setGeneralNightAvailability(true);
+        }
+    }
+
     private static boolean checkPatterMatching(String pattern, List<ShiftCounter> dayShiftCounters, List<ShiftCounter> nightShiftCounters) {
         for (int i = 0; i < pattern.length(); ++i) {
             if ( String.valueOf(pattern.charAt(i)).equals(Shift.d.toString()) ) {
@@ -313,6 +320,31 @@ public class ScheduleUtil {
             writer.println(pattern.getPattern());
         }
         writer.close();
+    }
+
+    protected static List<NurseSto> changeAllDaysToProperShift(List<NurseSto> allNurses) {
+        int dayShiftOccurences = 0;
+        for (int i = 0; i < ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER * (ScheduleConfig.WORKWEEK_LENGTH + ScheduleConfig.WEEKEND_LEGTH) /*chuj wi o co chodzi!?*/; ++i) {
+            for (NurseSto nurse : allNurses) {
+                String pattern = nurse.getSchedule();
+                StringBuilder patternBuilder = new StringBuilder(pattern);
+                if ( pattern.charAt(i) == 'd' ) {
+                    if ( dayShiftOccurences == 0 ) {
+                        patternBuilder.setCharAt(i, 'E');
+                    } else if ( dayShiftOccurences == 1 ) {
+                        patternBuilder.setCharAt(i, 'D');
+                    } else if ( dayShiftOccurences == 2 ) {
+                        patternBuilder.setCharAt(i, 'L');
+                    }
+                    dayShiftOccurences++;
+                    if ( dayShiftOccurences == 3 ) {
+                        dayShiftOccurences = 0;
+                    }
+                }
+                nurse.setSchedule(patternBuilder.toString());
+            }
+        }
+        return allNurses;
     }
 
 }
