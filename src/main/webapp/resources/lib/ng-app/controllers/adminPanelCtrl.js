@@ -18,10 +18,35 @@ nurseApp.controller("AdminPanelCtrl", function($scope, $modal, NurseService, Sch
     };
 
     $scope.delete = function(index) {
-        var id = $scope.nurses[index].id;
-        NurseService.delete({id: id}, function(result) {
-            if (result.status == 'SUCCESS') {
-                $scope.nurses.splice(index, 1);
+        var confirmModal = $modal.open({
+            templateUrl: 'resources/lib/ng-app/templates/confirmModal.html',
+            size: 'sm',
+            resolve: {
+                infoMsg: function () {
+                    return "Are you sure you want to delete this nurse?";
+                }
+            },
+            controller: function($scope, $modalInstance, infoMsg) {
+                $scope.msg = infoMsg;
+
+                $scope.ok = function () {
+                    $modalInstance.close(true);
+                };
+
+                $scope.cancel = function() {
+                    $modalInstance.close(false);
+                }
+            }
+        });
+
+        confirmModal.result.then(function(confirm) {
+            if (confirm == true) {
+                var id = $scope.nurses[index].id;
+                NurseService.delete({id: id}, function(result) {
+                    if (result.status == 'SUCCESS') {
+                        $scope.nurses.splice(index, 1);
+                    }
+                });
             }
         });
     };
