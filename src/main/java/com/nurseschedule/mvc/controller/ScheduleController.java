@@ -8,6 +8,7 @@ import com.nurseschedule.mvc.dto.NurseDto;
 import com.nurseschedule.mvc.object.Event;
 import com.nurseschedule.mvc.service.INurseService;
 import com.nurseschedule.mvc.utils.ResponseUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,13 @@ public class ScheduleController {
         List<Event> events = new ArrayList<>();
         generateEvents(nurseDtos, events);
         return new ResponseUtil((List) events);
+    }
+    
+    @RequestMapping(value = "/generate", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseUtil generate() {
+    	//TODO: Generowanie raportu
+        return new ResponseUtil(new ArrayList<String>());
     }
 
     /**

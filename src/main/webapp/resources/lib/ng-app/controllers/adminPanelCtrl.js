@@ -58,4 +58,35 @@ nurseApp.controller("AdminPanelCtrl", function($scope, $modal, NurseService, Sch
             });
         });
     };
+    
+    $scope.generateReport = function(index) {
+        ScheduleService.generate({}, function(result) {
+        	
+        	var info='';
+            if (result.status == 'SUCCESS') {
+            	info = 'Report generation was successful!';
+            }
+            else {
+            	info = 'Error!';
+            }
+            
+            
+	       	 var scheduleModal = $modal.open({
+	                templateUrl: 'resources/lib/ng-app/templates/infoModal.html',
+	                resolve: {
+	               	 infoMsg: function () {
+	                        return info;
+	                      }
+	                },
+	                controller: function($scope, $modalInstance, infoMsg) {
+	               	 $scope.msg = infoMsg;
+	               	 
+	               	  $scope.ok = function () {
+	               	    $modalInstance.close();
+	               	  };
+	                },
+	                size: 'sm'
+	            });
+	        });
+    };
 });
