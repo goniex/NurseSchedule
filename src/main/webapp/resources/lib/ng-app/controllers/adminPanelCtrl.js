@@ -1,5 +1,6 @@
 nurseApp.controller("AdminPanelCtrl", function($scope, $modal, NurseService, ScheduleService) {
     $scope.nurse = {};
+    $scope.disableAdd = true;
 
     NurseService.get({}, function(result) {
         if (result.status == 'SUCCESS') {
@@ -125,5 +126,23 @@ nurseApp.controller("AdminPanelCtrl", function($scope, $modal, NurseService, Sch
             },
             size: 'lg'
         });
+    }
+
+    $scope.$watch('nurse', validate, true);
+
+    function validate(newVal, oldVal, scope) {
+        var name = true;
+        var lastName = true;
+        var email = true;
+        var workTime = true;
+        if (newVal.name != "" && newVal.name != undefined) name = false;
+        if (newVal.lastName != "" && newVal.lastName != undefined) lastName = false;
+        if (newVal.email != "" && newVal.email != undefined) email = false;
+        if (newVal.workTime != "" && newVal.workTime != undefined && parseInt(newVal.workTime, 10)) workTime = false;
+        if (!name && !lastName && !email && !workTime) {
+            $scope.disableAdd = false;
+        } else {
+            $scope.disableAdd = true;
+        }
     }
 });

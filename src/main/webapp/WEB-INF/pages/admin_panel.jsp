@@ -63,7 +63,7 @@
                     <input type="number" ng-model="nurse.workTime" class="form-control" placeholder="job time">
                 </div>
                 <div class="col-xs-2">
-                    <button ng-click="save()" type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
+                    <button ng-click="save()" ng-disabled="disableAdd" type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
                 </div>
             </div>
         </div>
