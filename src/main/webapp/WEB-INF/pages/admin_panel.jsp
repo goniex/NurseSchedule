@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="col-xs-3 col-xs-offset-1">
-                <button type="button" class="btn btn-danger btn-block">
+                <button type="button" ng-click=generateReport() class="btn btn-danger btn-block">
                     GENERATE NEW
                 </button>
                 <button type="button" ng-click="show()" class="btn btn-danger btn-block schedule">
@@ -41,7 +41,7 @@
                             </div>
                         </td>
                         <td class="small-center">{{nurse.workTime}}</td>
-                        <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
+                        <td class="small-center"><a ng-click="showById($index)" ng-href="javascript:void(0);" title=""><img src=<c:url value="/resources/img/ic_schedule_small.png"/>/></a></td>
                         <td class="small-center"><a ng-click="delete($index)" ng-href="javascript:void(0);" title=""><img src=<c:url value="/resources/img/ic_remove.png"/>/></a></td>
                         <td class="small-center"><a href="#" title=""><img src=<c:url value="/resources/img/ic_edit.png"/>/></a></td>
                     </tr>
@@ -63,7 +63,7 @@
                     <input type="number" ng-model="nurse.workTime" class="form-control" placeholder="job time">
                 </div>
                 <div class="col-xs-2">
-                    <button ng-click="save()" type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
+                    <button ng-click="save()" ng-disabled="disableAdd" type="button" class="btn btn-danger btn-block">ADD NEW NURSE</button>
                 </div>
             </div>
         </div>

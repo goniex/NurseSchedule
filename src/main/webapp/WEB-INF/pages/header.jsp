@@ -18,6 +18,7 @@
 
         <script src="<c:url value="/resources/lib/ng-app/app.js"/>"></script>
         <script src="<c:url value="/resources/lib/ng-app/controllers/adminPanelCtrl.js"/>"></script>
+        <script src="<c:url value="/resources/lib/ng-app/controllers/nursePanelCtrl.js"/>"></script>
         <script src="<c:url value="/resources/lib/ng-app/services/nurseService.js"/>"></script>
         <script src="<c:url value="/resources/lib/ng-app/services/scheduleService.js"/>"></script>
         <script src="<c:url value="/resources/lib/ng-app/directives/nsBlock.js"/>"></script>

@@ -41,6 +41,19 @@ public class NurseController {
     }
 
     /**
+     * Get nurse by email
+     * @return ResponseUtil
+     */
+    @RequestMapping(value = "/getByEmail", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseUtil get(@RequestBody Object requestObject) {
+        Nurse nurse = (Nurse) RequestUtil.convert(requestObject, Nurse.class);
+        NurseDto nurseDto = this.nurseService.findByEmail(nurse.getEmail());
+        nurse = new Nurse(nurseDto);
+        return new ResponseUtil(nurse);
+    }
+
+    /**
      * Save new nurse
      * @return ResponseUtil
      */

@@ -47,22 +47,23 @@
                 <div class="centering">
                     <div class="col-xs-12">
                         <h2>ABOUT NURSE SCHEDULING</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pulvinar sit amet odio tincidunt auctor. Vivamus sodales lorem ac enim malesuada, vitae tincidunt mi suscipit.</p>
+                        <p>Productivity is never an accident. It is always the result of a commitment to excellence, intelligent planning, and focused effort.</p>
+                        <p>Paul J. Meyer</p>
                     </div>
                     <div class="col-xs-4 circles">
                         <img src=<c:url value="/resources/img/ic_schedule.png"/>/>
                         <h2>Perfect schedule</h2>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        Schedule available as calendar view
                     </div>
                     <div class="col-xs-4 circles">
                         <img src=<c:url value="/resources/img/ic_share.png"/>/>
                         <h2>Share with staff</h2>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        Easy access for nurses - online or in print version
                     </div>
                     <div class="col-xs-4 circles">
                         <img src=<c:url value="/resources/img/ic_person.png"/>/>
                         <h2>Personalize</h2>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        Each nurse has account with individual schedule
                     </div>
                 </div>
             </div>

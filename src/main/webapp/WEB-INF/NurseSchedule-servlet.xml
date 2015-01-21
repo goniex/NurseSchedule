@@ -21,4 +21,7 @@
 	</bean>
 
 	<bean id="userContext" class="com.nurseschedule.mvc.service.impl.UserContext"/>
+	
+	<bean id="scheduleHelper" class="com.nurseschedule.mvc.algorithm.ScheduleHelper"/>
+	
 </beans>
