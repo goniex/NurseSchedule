@@ -6,17 +6,11 @@ import java.util.List;
 
 import pl.nurseschedule.mvc.sto.NurseSto;
 
-/**
- * @author Caro
- * @date 5 gru 2014
- */
-public class Main {
+public class ScheduleHelper {
 
-    private static List<Shift> shifts = Arrays.asList(Shift.values());
-
-    private static List<String> patterns = new ArrayList<String>();
-
-    public static void main(String[] args) {
+    public List<NurseSto> generateSchedule(List<NurseSto> nurses) {
+        List<Shift> shifts = Arrays.asList(Shift.values());
+        List<String> patterns = new ArrayList<String>();
         PatternUtil.getPermutations(patterns, shifts, ScheduleConfig.WORKWEEK_LENGTH + ScheduleConfig.WEEKEND_LEGTH, "");
 
         /*List<NursePattern> consistentPatterns = PatternUtil.filtrationBasedOnConditions(patterns);
@@ -59,11 +53,9 @@ public class Main {
         ScheduleUtil.createWorkWeekCounters(dayShiftCounters, nightShiftCounters);
         ScheduleUtil.createWeekendCounters(dayShiftCounters, nightShiftCounters);
 
-        List<NurseSto> nursesForFullJob = createNursesToTest(ScheduleConfig.FULL_TIME_NURSES_NUMBER, 0);
-        List<NurseSto> nursesFor20Hours = createNursesToTest(ScheduleConfig.HOURS_20_NURSES_NUMBER + ScheduleConfig.FULL_TIME_NURSES_NUMBER
-                + ScheduleConfig.HOURS_32_NURSES_NUMBER, ScheduleConfig.FULL_TIME_NURSES_NUMBER + ScheduleConfig.HOURS_32_NURSES_NUMBER);
-        List<NurseSto> nursesFor32Hours = createNursesToTest(ScheduleConfig.HOURS_32_NURSES_NUMBER + ScheduleConfig.FULL_TIME_NURSES_NUMBER,
-                ScheduleConfig.FULL_TIME_NURSES_NUMBER);
+        List<NurseSto> nursesForFullJob = getNursesBasedOnWorkType(nurses, 36);
+        List<NurseSto> nursesFor20Hours = getNursesBasedOnWorkType(nurses, 20);
+        List<NurseSto> nursesFor32Hours = getNursesBasedOnWorkType(nurses, 32);
         List<NurseSto> allNurses = new ArrayList<NurseSto>();
         allNurses.addAll(nursesForFullJob);
         allNurses.addAll(nursesFor32Hours);
@@ -106,12 +98,13 @@ public class Main {
         // zapisanie patternu do jednego dlugiego stringa
         for (NurseSto nurse : allNurses) {
             for (int i = 0; i < ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER; ++i) {
-                nurse.setSchedule(nurse.getSchedule() + " " + nurse.getWeekPattern(i));
+                nurse.setSchedule(nurse.getSchedule() + nurse.getWeekPattern(i));
             }
         }
 
+        // zmiana wszystkich patternow na E D i L (po kolei)
         int dayShiftOccurences = 0;
-        for (int i = 0; i <= ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER * (ScheduleConfig.WORKWEEK_LENGTH + ScheduleConfig.WEEKEND_LEGTH) + 4 /*chuj wi o co chodzi!?*/; ++i) {
+        for (int i = 0; i < ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER * (ScheduleConfig.WORKWEEK_LENGTH + ScheduleConfig.WEEKEND_LEGTH) /*chuj wi o co chodzi!?*/; ++i) {
             for (NurseSto nurse : allNurses) {
                 String pattern = nurse.getSchedule();
                 StringBuilder patternBuilder = new StringBuilder(pattern);
@@ -136,9 +129,20 @@ public class Main {
             System.out.println(nurse.getSchedule());
         }
 
-    }// main method
+        return allNurses;
+    }// generate schedule
 
-    private static void printNursesDetails(List<NurseSto> nurses, int weekIndex) {
+    private List<NurseSto> getNursesBasedOnWorkType(List<NurseSto> allNurses, int workTime) {
+        List<NurseSto> nursesPart = new ArrayList<NurseSto>();
+        for (NurseSto nurse : allNurses) {
+            if ( nurse.getWorkTime() == workTime ) {
+                nursesPart.add(nurse);
+            }
+        }
+        return nursesPart;
+    }
+
+    private void printNursesDetails(List<NurseSto> nurses, int weekIndex) {
         for (NurseSto nurse : nurses) {
             if ( nurse != null ) {
                 System.out.println("Nurse: " + nurse.getId() + " Week availability: " + nurse.isWeekAvailability() + " Night availability: "
@@ -147,16 +151,4 @@ public class Main {
         }
     }
 
-    private static List<NurseSto> createNursesToTest(int number, int previousQuantity) {
-        List<NurseSto> nurses = new ArrayList<NurseSto>();
-        for (int i = previousQuantity; i < number; ++i) {
-            NurseSto nurse = new NurseSto();
-            nurse.setId(i);
-            nurse.setWeekAvailability(true);
-            nurse.setGeneralNightAvailability(true);
-            nurse.setNightAvailablityForBegin();
-            nurses.add(nurse);
-        }
-        return nurses;
-    }
 }

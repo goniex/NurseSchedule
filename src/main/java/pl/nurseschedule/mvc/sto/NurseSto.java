@@ -21,8 +21,10 @@ public class NurseSto extends NurseDto {
     private boolean weekAvailability;
 
     private boolean generalNightAvailability;
-    
+
     private ArrayList<Boolean> nightAvailabilityInWeeks;
+
+    private String schedule = "";
 
     public void setWeekPattern(String pattern, int weekIndex) {
         weekPatterns.add(weekIndex, pattern);
@@ -51,18 +53,18 @@ public class NurseSto extends NurseDto {
     public void setGeneralNightAvailability(boolean generalNightAvailability) {
         this.generalNightAvailability = generalNightAvailability;
     }
-    
+
     public void setNightAvailablityForBegin() {
         nightAvailabilityInWeeks = new ArrayList<Boolean>();
-        for(int i=0; i<ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER; ++i) {
+        for (int i = 0; i < ScheduleConfig.ALL_SCHEDULE_WEEK_NUMBER; ++i) {
             nightAvailabilityInWeeks.add(true);
         }
     }
-    
+
     public void setNightAvailabilityInWeeks(int week, boolean value) {
         nightAvailabilityInWeeks.set(week, value);
     }
-    
+
     public boolean isNightAvailabilityInWeek(int week) {
         return nightAvailabilityInWeeks.get(week);
     }
@@ -70,5 +72,15 @@ public class NurseSto extends NurseDto {
     public void printWeekPattern(int weekIndex) {
         System.out.println(weekPatterns.get(weekIndex));
     }
-    
+
+    @Override
+    public String getSchedule() {
+        return schedule;
+    }
+
+    @Override
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
 }
