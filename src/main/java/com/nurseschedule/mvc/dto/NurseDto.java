@@ -1,12 +1,6 @@
 package com.nurseschedule.mvc.dto;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Tomasz Morek
@@ -15,30 +9,21 @@ import javax.persistence.Table;
 @Table(name = "nurse", schema = "", catalog = "tomek199_nurseschedule")
 public class NurseDto {
     private Integer id;
-
     private String email;
-
     private String password;
-
     private String name;
-
     private String lastName;
-
-    protected int workTime;
-
-    private String type; // ?????
-
-    private String fullPattern; // final nurse patter saving to database (move to dto class on the end)s
+    private int workTime;
+    private String type;
+    private String schedule;
 
     /**
      * Default constructor
      */
-    public NurseDto() {
-    }
+    public NurseDto() {}
 
     /**
      * Constructor
-     *
      * @param id
      */
     public NurseDto(Integer id) {
@@ -48,7 +33,8 @@ public class NurseDto {
     /**
      * Constructor
      */
-    public NurseDto(String email, String password, String name, String lastName, Integer workTime, String type) {
+    public NurseDto(String email, String password, String name,
+                    String lastName, Integer workTime, String type) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -128,38 +114,33 @@ public class NurseDto {
         this.type = type;
     }
 
+    @Basic
+    @Column(name = "schedule")
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if ( this == o ) {
-            return true;
-        }
-        if ( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         NurseDto nurseDto = (NurseDto) o;
 
-        if ( id != nurseDto.id ) {
+        if (id != nurseDto.id) return false;
+        if (type != nurseDto.type) return false;
+        if (workTime != nurseDto.workTime) return false;
+        if (schedule != nurseDto.schedule) return false;
+        if (email != null ? !email.equals(nurseDto.email) : nurseDto.email != null) return false;
+        if (lastName != null ? !lastName.equals(nurseDto.lastName) : nurseDto.lastName != null)
             return false;
-        }
-        if ( type != nurseDto.type ) {
+        if (name != null ? !name.equals(nurseDto.name) : nurseDto.name != null) return false;
+        if (password != null ? !password.equals(nurseDto.password) : nurseDto.password != null)
             return false;
-        }
-        if ( workTime != nurseDto.workTime ) {
-            return false;
-        }
-        if ( email != null ? !email.equals(nurseDto.email) : nurseDto.email != null ) {
-            return false;
-        }
-        if ( lastName != null ? !lastName.equals(nurseDto.lastName) : nurseDto.lastName != null ) {
-            return false;
-        }
-        if ( name != null ? !name.equals(nurseDto.name) : nurseDto.name != null ) {
-            return false;
-        }
-        if ( password != null ? !password.equals(nurseDto.password) : nurseDto.password != null ) {
-            return false;
-        }
 
         return true;
     }
@@ -173,6 +154,7 @@ public class NurseDto {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + workTime;
         result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (schedule != null ? schedule.hashCode() : 0);
         return result;
     }
 }

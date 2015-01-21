@@ -13,10 +13,10 @@
                 </div>
             </div>
             <div class="col-xs-3 col-xs-offset-1">
-                <button type="button" class="btn btn-danger btn-block">
+                <button type="button" ng-click=generateReport() class="btn btn-danger btn-block">
                     GENERATE NEW
                 </button>
-                <button type="button" class="btn btn-danger btn-block schedule">
+                <button type="button" ng-click="show()" class="btn btn-danger btn-block schedule">
                     SEE SCHEDULE
                     <h6>01.01.2012-01.02.2012</h6>
                 </button>
