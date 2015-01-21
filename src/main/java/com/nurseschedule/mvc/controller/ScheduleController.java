@@ -10,10 +10,7 @@ import com.nurseschedule.mvc.service.INurseService;
 import com.nurseschedule.mvc.utils.ResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -31,6 +28,10 @@ public class ScheduleController {
     @Autowired
     private INurseService nurseService;
 
+    /**
+     * Get all nurses schedule
+     * @return
+     */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
     public ResponseUtil get() {
@@ -39,7 +40,21 @@ public class ScheduleController {
         generateEvents(nurseDtos, events);
         return new ResponseUtil((List) events);
     }
-    
+
+    /**
+     * Get one nurse schedule
+     * @return ResponseUtil
+     */
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseUtil delete(@PathVariable Integer id) {
+        NurseDto nurse = this.nurseService.findById(id);
+        List<Event> events = new ArrayList<>();
+        generateEvents(events, nurse);
+        return new ResponseUtil((List) events);
+    }
+
+
     @RequestMapping(value = "/generate", method = RequestMethod.GET)
     @ResponseBody
     public ResponseUtil generate() {
@@ -48,29 +63,37 @@ public class ScheduleController {
     }
 
     /**
-     * Generate events
+     * Generate events for many nurses
      * @param nurseDtos
      * @param events
      */
     private void generateEvents(List<NurseDto> nurseDtos, List<Event> events) {
+        for (NurseDto nurseDto : nurseDtos) {
+            generateEvents(events, nurseDto);
+        }
+    }
+
+    /**
+     * Generate events for one nurse
+     * @param events
+     * @param nurseDto
+     */
+    private void generateEvents(List<Event> events, NurseDto nurseDto) {
         final Map<String, String> types = new HashMap<>();
         types.put("R", "inverse");
         types.put("d", "warning");
         types.put("N", "info");
-
-        for (NurseDto nurseDto : nurseDtos) {
-            if (nurseDto.getSchedule() != null && nurseDto.getSchedule().length() > 0) {
-                String fullName = nurseDto.getName() + " " + nurseDto.getLastName();
-                String[] patterns = nurseDto.getSchedule().split("");
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                calendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
-                for (String pattern : patterns) {
-                    Event event = new Event(fullName, types.get(pattern),
-                            calendar.getTime(), calendar.getTime());
-                    events.add(event);
-                    calendar.add(Calendar.DATE, 1);
-                }
+        if (nurseDto.getSchedule() != null && nurseDto.getSchedule().length() > 0) {
+            String fullName = nurseDto.getName() + " " + nurseDto.getLastName();
+            String[] patterns = nurseDto.getSchedule().split("");
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+            calendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
+            for (String pattern : patterns) {
+                Event event = new Event(fullName, types.get(pattern),
+                        calendar.getTime(), calendar.getTime());
+                events.add(event);
+                calendar.add(Calendar.DATE, 1);
             }
         }
     }
