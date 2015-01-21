@@ -4,26 +4,16 @@ package com.nurseschedule.mvc.controller;
  * @author Tomasz Morek
  */
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import pl.nurseschedule.mvc.sto.NurseSto;
-
 import com.nurseschedule.mvc.algorithm.ScheduleHelper;
 import com.nurseschedule.mvc.dto.NurseDto;
 import com.nurseschedule.mvc.object.Event;
 import com.nurseschedule.mvc.service.INurseService;
 import com.nurseschedule.mvc.utils.ResponseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import pl.nurseschedule.mvc.sto.NurseSto;
+
+import java.util.*;
 
 /**
  * Schedule REST controller
@@ -105,7 +95,9 @@ public class ScheduleController {
     private void generateEvents(List<Event> events, NurseDto nurseDto) {
         final Map<String, String> types = new HashMap<>();
         types.put("R", "inverse");
-        types.put("d", "warning");
+        types.put("D", "warning");
+        types.put("E", "early");
+        types.put("L", "special");
         types.put("N", "info");
         if ( nurseDto.getSchedule() != null && nurseDto.getSchedule().length() > 0 ) {
             String fullName = nurseDto.getName() + " " + nurseDto.getLastName();
