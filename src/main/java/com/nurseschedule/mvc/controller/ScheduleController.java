@@ -47,7 +47,7 @@ public class ScheduleController {
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseUtil delete(@PathVariable Integer id) {
+    public ResponseUtil get(@PathVariable Integer id) {
         NurseDto nurse = this.nurseService.findById(id);
         List<Event> events = new ArrayList<>();
         generateEvents(events, nurse);
